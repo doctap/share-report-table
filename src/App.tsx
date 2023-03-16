@@ -15,15 +15,6 @@ function App () {
   return (
     <div className={styles.App}>
 
-      <button onClick={showReact} className={styles.Click}>star</button>
-      <img src={logo} className={styles.AppLogo} alt="logo" />
-
-      {
-        isShow
-          ? <><h1>Happy hacking!{counter}</h1> <button onClick={setCount}>count</button></>
-          : null
-      }
-
     </div>
   );
 }
