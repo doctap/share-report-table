@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './App.module.scss';
 import { useAppDispatch, useAppSelector } from './redux/hooks/redux';
-import { showSlice } from './redux/reducers/ExampleSlice';
-import logo from './logo.svg';
+import { getStocks, stocks } from './api';
+import { Table } from './components';
+import { headers } from './props/TableHeaders';
 
 function App () {
-  const { plusOne, showHideWindow } = showSlice.actions;
-  const { counter, isShow } = useAppSelector(st => st.showSlice);
+  const { error, isLoading, items } = useAppSelector(st => st.StocksSlice);
   const dispatch = useAppDispatch();
 
-  const showReact = () => { dispatch(showHideWindow(!isShow)); };
-  const setCount = () => { dispatch(plusOne(counter + 1)); };
+  useEffect(() => {
+    dispatch(getStocks());
+  }, []);
 
   return (
     <div className={styles.App}>
+
+      {error !== '' && <h1>{error}</h1>}
+
+      {
+        isLoading
+          ? <h2>Loading...</h2>
+          : <Table items={items} headers={headers} />
+      }
 
     </div>
   );
