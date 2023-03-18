@@ -6,7 +6,8 @@ import {
   Droppable
 }
   from 'react-beautiful-dnd';
-import { type IStock } from '../../../api';
+import type { ConvertedStocks } from '../../../types';
+import { getId } from '../../../helpers';
 
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   ...draggableStyle,
@@ -18,7 +19,7 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 });
 
 interface ITBodyDragDrop {
-  stocks: IStock[]
+  stocks: ConvertedStocks
 }
 
 export const TBodyDragDrop = (props: ITBodyDragDrop) => {
@@ -48,16 +49,16 @@ export const TBodyDragDrop = (props: ITBodyDragDrop) => {
           >
             {items.map((item, index) => {
               return (
-                <Draggable key={item.stockId} draggableId={item.stockId} index={index}>
+                <Draggable key={getId(item)} draggableId={getId(item)} index={index}>
                   {(provided, snapshot) => (
                     <tr
-                      key={item.stockId}
+                      key={getId(item)}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                     >
-                      {item.fields.map(cell => <td key={cell}>{cell}</td>)}
+                      {item.map((cell, i) => <td key={i}>{cell}</td>)}
                     </tr>
                   )}
                 </Draggable>

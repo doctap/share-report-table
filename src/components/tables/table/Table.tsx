@@ -1,13 +1,7 @@
 import React from 'react';
 import styles from './Table.module.scss';
-import { type IStock } from '../../../api';
-import { type ITableHead } from '../../../types';
+import { type ITable } from '../../../types';
 import { TBodyDragDrop } from '../../index';
-
-interface ITable {
-  items: IStock[]
-  headers: ITableHead[]
-}
 
 export const Table = (props: ITable) => {
   return (
@@ -15,11 +9,11 @@ export const Table = (props: ITable) => {
       <thead>
         <tr>
           {props.headers.map(columnHead => (
-            <th key={columnHead.header}>{columnHead.header}</th>
+            <th key={columnHead}>{columnHead}</th>
           ))}
         </tr>
       </thead>
-      <TBodyDragDrop stocks={props.items} />
+      <TBodyDragDrop stocks={props.convertedStocks} />
     </table>
   );
 };
