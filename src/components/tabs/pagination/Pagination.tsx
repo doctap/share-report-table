@@ -28,6 +28,8 @@ export const Pagination = (props: IPagination) => {
       breakClassName='Pagination__break-item'
       nextClassName='Pagination__next-item'
       previousClassName='Pagination__previous-item'
+      previousLabel='<'
+      nextLabel='>'
     />
   );
 };

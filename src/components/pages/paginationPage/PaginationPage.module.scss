@@ -1,0 +1,13 @@
+.PaginationPage {
+  padding-top: 3em;
+  height: 100%;
+  position: relative;
+
+  .Pagination {
+    padding-bottom: 3em;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

@@ -13,8 +13,15 @@ export interface IStock {
   volume: number
 }
 
+export interface IStocksFetching {
+  pagesCount: number
+  stocks: IStock[]
+  error: string
+  isLoading: boolean
+}
+
 export interface IResponse {
-  pageCount: number
+  totalItemCount: number
   stocks: IStock[]
 }
 

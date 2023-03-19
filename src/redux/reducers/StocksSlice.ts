@@ -1,8 +1,9 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { IItems, IStock } from '../../api/data-contracts';
+import type { IStocksFetching, IStock } from '../../api';
 
-const initialState: IItems<IStock> = {
-  items: [],
+const initialState: IStocksFetching = {
+  pagesCount: 0,
+  stocks: [],
   error: '',
   isLoading: false
 };
@@ -14,10 +15,11 @@ export const StocksSlice = createSlice({
     stocksFetching (state) {
       state.isLoading = true;
     },
-    stocksFetchingSuccess (state, action: PayloadAction<IStock[]>) {
+    stocksFetchingSuccess (state, action: PayloadAction<{ stocks: IStock[], pagesCount: number }>) {
       state.isLoading = false;
       state.error = '';
-      state.items = action.payload;
+      state.stocks = action.payload.stocks;
+      state.pagesCount = action.payload.pagesCount;
     },
     stocksFetchingError (state, action: PayloadAction<string>) {
       state.isLoading = false;

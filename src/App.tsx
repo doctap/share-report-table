@@ -1,12 +1,13 @@
 import React from 'react';
-import styles from './App.module.scss';
-import { PaginationPage } from './components';
+import { NotFound, PaginationPage } from './components';
+import { Routes, Route } from 'react-router-dom';
 
 function App () {
   return (
-    <div className={styles.App}>
-      <PaginationPage />
-    </div>
+    <Routes>
+      <Route path='/' element={<PaginationPage />} />
+      <Route path='*' element={<NotFound />} />
+    </Routes>
   );
 }
 
