@@ -17,7 +17,7 @@ export const PaginationPage = () => {
   const dispatch = useAppDispatch();
 
   const [currentPage, setCurrentPage] = useState(pageNumber);
-  let table = stocks.length !== 0 ? getConvertedStocks(getNumberedStocks(stocks, currentPage)) : { headers: [], convertedStocks: [] };
+  const table = getConvertedStocks(getNumberedStocks(stocks, currentPage));
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected + 1);
@@ -38,7 +38,7 @@ export const PaginationPage = () => {
         : <>
           <Table
             headers={table.headers}
-            convertedStocks={table.convertedStocks as Map<string, Array<string | number>>}
+            convertedStocks={table.convertedStocks}
           />
         </>}
       <div className={styles.Pagination}>

@@ -1,12 +1,8 @@
-import type { IResponseStock, IStock } from '../../api';
-
-export const getNumberedStocks = (stocks: IResponseStock[], currentPage: number): IStock[] => {
-  let count = 0;
-  const getNewStock = (stock: IResponseStock) => ({ ...stock, rowNumber: ((currentPage * 10) - 10) + count++ });
-  return stocks.map(it => getNewStock(it));
-};
+import type { IStock } from '../../api';
 
 export const getConvertedStocks = (stocks: IStock[]) => {
+  if (stocks.length === 0) return { headers: [], convertedStocks: [] };
+
   const sortedKeys: Array<keyof IStock> =
    (Object.keys(stocks[0]) as Array<keyof IStock>).sort();
 
@@ -19,7 +15,7 @@ export const getConvertedStocks = (stocks: IStock[]) => {
     return arr;
   };
 
-  const map = new Map<string, Array<string | number>>();
+  const matrix: Array<[string, Array<string | number>]> = [];
 
   const getSortedValues = (keys: typeof sortedKeys, stock: IStock) =>
     moveItemToBeginning(sortedKeys, 'rowNumber').map(key => (
@@ -27,11 +23,11 @@ export const getConvertedStocks = (stocks: IStock[]) => {
     ));
 
   for (const stock of stocks) {
-    map.set(stock.symbol, getSortedValues(sortedKeys, stock));
+    matrix.push([stock.symbol, getSortedValues(sortedKeys, stock)]);
   }
 
   return {
     headers: sortedKeys,
-    convertedStocks: map
+    convertedStocks: matrix
   };
 };

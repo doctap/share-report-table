@@ -1,5 +1,6 @@
 import type { IResponseStock } from '../../api';
-import { getConvertedStocks, getNumberedStocks } from './ConvertData';
+import { getNumberedStocks } from '../index';
+import { getConvertedStocks } from './ConvertData';
 
 const getStocks = (): IResponseStock[] =>
   [
@@ -66,10 +67,10 @@ test('getConvertedStocks', () => {
       'symbol',
       'volume'
     ],
-    convertedStocks: new Map([
+    convertedStocks: [
       ['BOAC+', [20, 0, 0, 0, 0, 0, 0, 0, 1679059800000, 'n/a', 'n/a', 'BOAC+', 0]],
       ['LVTX', [21, 1.81, 100, 1.5, 100, 0, 0, 0, 1679070812465, 'n/a', 'n/a', 'LVTX', 0]],
       ['WIA', [22, 0, 0, 8.64, 100, 0, 0, 0, 1679072587759, 'miscellaneous', 'cef', 'WIA', 0]]
-    ])
+    ]
   });
 });

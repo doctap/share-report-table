@@ -17,7 +17,7 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 });
 
 interface ITBodyDragDrop {
-  stocks: Map<string, Array<string | number>>
+  stocks: Array<[string, Array<string | number>]>
 }
 
 export const TBodyDragDrop = (props: ITBodyDragDrop) => {
@@ -31,7 +31,7 @@ export const TBodyDragDrop = (props: ITBodyDragDrop) => {
     const [newOrder] = rows.splice(source.index, 1);
     rows.splice(destination.index, 0, newOrder);
 
-    setItems(new Map(rows));
+    setItems(rows);
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export const TBodyDragDrop = (props: ITBodyDragDrop) => {
           <tbody
             {...provided.droppableProps} ref={provided.innerRef}
           >
-            {Array.from(items).map((item, index) => {
+            {items.map((item, index) => {
               return (
                 <Draggable key={item[0]} draggableId={item[0]} index={index}>
                   {(provided, snapshot) => (
