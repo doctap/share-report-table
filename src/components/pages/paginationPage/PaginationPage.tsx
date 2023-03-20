@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks/redux';
 import { getStocks } from '../../../api';
 import { Pagination, Table } from '../../index';
-import { getConvertedStocks } from '../../../helpers';
+import { getConvertedStocks, getNumberedStocks } from '../../../helpers';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './PaginationPage.module.scss';
 
@@ -16,8 +16,8 @@ export const PaginationPage = () => {
   const { error, isLoading, stocks, pagesCount } = useAppSelector(st => st.StocksSlice);
   const dispatch = useAppDispatch();
 
-  let table = stocks.length !== 0 ? getConvertedStocks(stocks) : { headers: [], convertedStocks: [] };
   const [currentPage, setCurrentPage] = useState(pageNumber);
+  let table = stocks.length !== 0 ? getConvertedStocks(getNumberedStocks(stocks, currentPage)) : { headers: [], convertedStocks: [] };
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected + 1);
@@ -36,7 +36,10 @@ export const PaginationPage = () => {
       {isLoading
         ? <h2>Loading...</h2>
         : <>
-          <Table headers={table.headers} convertedStocks={table.convertedStocks} />
+          <Table
+            headers={table.headers}
+            convertedStocks={table.convertedStocks as Map<string, Array<string | number>>}
+          />
         </>}
       <div className={styles.Pagination}>
         <Pagination

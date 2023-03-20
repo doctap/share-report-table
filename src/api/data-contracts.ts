@@ -1,4 +1,4 @@
-export interface IStock {
+export interface IResponseStock {
   askPrice: number
   askSize: number
   bidPrice: number
@@ -13,16 +13,20 @@ export interface IStock {
   volume: number
 }
 
+export interface IStock extends IResponseStock {
+  rowNumber: number
+}
+
 export interface IStocksFetching {
   pagesCount: number
-  stocks: IStock[]
+  stocks: IResponseStock[]
   error: string
   isLoading: boolean
 }
 
 export interface IResponse {
   totalItemCount: number
-  stocks: IStock[]
+  stocks: IResponseStock[]
 }
 
 export interface IItems<T> {

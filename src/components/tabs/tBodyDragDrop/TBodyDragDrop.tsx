@@ -6,8 +6,6 @@ import {
   Droppable
 }
   from 'react-beautiful-dnd';
-import type { ConvertedStocks } from '../../../types';
-import { getId } from '../../../helpers';
 
 const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
   ...draggableStyle,
@@ -19,7 +17,7 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 });
 
 interface ITBodyDragDrop {
-  stocks: ConvertedStocks
+  stocks: Map<string, Array<string | number>>
 }
 
 export const TBodyDragDrop = (props: ITBodyDragDrop) => {
@@ -33,7 +31,7 @@ export const TBodyDragDrop = (props: ITBodyDragDrop) => {
     const [newOrder] = rows.splice(source.index, 1);
     rows.splice(destination.index, 0, newOrder);
 
-    setItems(rows);
+    setItems(new Map(rows));
   };
 
   useEffect(() => {
@@ -47,18 +45,18 @@ export const TBodyDragDrop = (props: ITBodyDragDrop) => {
           <tbody
             {...provided.droppableProps} ref={provided.innerRef}
           >
-            {items.map((item, index) => {
+            {Array.from(items).map((item, index) => {
               return (
-                <Draggable key={getId(item)} draggableId={getId(item)} index={index}>
+                <Draggable key={item[0]} draggableId={item[0]} index={index}>
                   {(provided, snapshot) => (
                     <tr
-                      key={getId(item)}
+                      key={item[0]}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                     >
-                      {item.map((cell, i) => <td key={i}>{cell}</td>)}
+                      {item[1].map((cell, i) => <td key={i}>{cell}</td>)}
                     </tr>
                   )}
                 </Draggable>

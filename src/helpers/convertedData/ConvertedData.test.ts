@@ -1,7 +1,7 @@
-import type { IStock } from '../../api';
-import { getConvertedStocks } from './ConvertData';
+import type { IResponseStock } from '../../api';
+import { getConvertedStocks, getNumberedStocks } from './ConvertData';
 
-const getStocks = (): IStock[] => (
+const getStocks = (): IResponseStock[] =>
   [
     {
       symbol: 'BOAC+',
@@ -45,14 +45,14 @@ const getStocks = (): IStock[] => (
       lastSaleTime: 0,
       volume: 0
     }
-  ]
-);
+  ];
 
 test('getConvertedStocks', () => {
-  const convertedStocks = getConvertedStocks(getStocks());
+  const convertedStocks = getConvertedStocks(getNumberedStocks(getStocks(), 3));
 
   expect(convertedStocks).toEqual({
     headers: [
+      'rowNumber',
       'askPrice',
       'askSize',
       'bidPrice',
@@ -66,10 +66,10 @@ test('getConvertedStocks', () => {
       'symbol',
       'volume'
     ],
-    convertedStocks: [
-      [0, 0, 0, 0, 0, 0, 0, 1679059800000, 'n/a', 'n/a', 'id-BOAC+', 0],
-      [1.81, 100, 1.5, 100, 0, 0, 0, 1679070812465, 'n/a', 'n/a', 'id-LVTX', 0],
-      [0, 0, 8.64, 100, 0, 0, 0, 1679072587759, 'miscellaneous', 'cef', 'id-WIA', 0]
-    ]
+    convertedStocks: new Map([
+      ['BOAC+', [20, 0, 0, 0, 0, 0, 0, 0, 1679059800000, 'n/a', 'n/a', 'BOAC+', 0]],
+      ['LVTX', [21, 1.81, 100, 1.5, 100, 0, 0, 0, 1679070812465, 'n/a', 'n/a', 'LVTX', 0]],
+      ['WIA', [22, 0, 0, 8.64, 100, 0, 0, 0, 1679072587759, 'miscellaneous', 'cef', 'WIA', 0]]
+    ])
   });
 });

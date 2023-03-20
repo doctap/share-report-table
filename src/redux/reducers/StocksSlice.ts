@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { IStocksFetching, IStock } from '../../api';
+import type { IStocksFetching, IResponseStock } from '../../api';
 
 const initialState: IStocksFetching = {
   pagesCount: 0,
@@ -15,7 +15,7 @@ export const StocksSlice = createSlice({
     stocksFetching (state) {
       state.isLoading = true;
     },
-    stocksFetchingSuccess (state, action: PayloadAction<{ stocks: IStock[], pagesCount: number }>) {
+    stocksFetchingSuccess (state, action: PayloadAction<{ stocks: IResponseStock[], pagesCount: number }>) {
       state.isLoading = false;
       state.error = '';
       state.stocks = action.payload.stocks;
