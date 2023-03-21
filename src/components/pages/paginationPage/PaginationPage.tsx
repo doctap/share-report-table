@@ -35,19 +35,19 @@ export const PaginationPage = () => {
       {error !== '' && <h1>{error}</h1>}
       {isLoading
         ? <h2>Loading...</h2>
-        : <>
+        : <div className={styles.PaginationTable}>
           <Table
             headers={table.headers}
             convertedStocks={table.convertedStocks}
           />
-        </>}
-      <div className={styles.Pagination}>
-        <Pagination
-          onChange={handlePageChange}
-          initialPage={currentPage - 1}
-          pageCount={pagesCount}
-        />
-      </div>
+          <div className={styles.Pagination}>
+            <Pagination
+              onChange={handlePageChange}
+              initialPage={currentPage - 1}
+              pageCount={pagesCount}
+            />
+          </div>
+        </div>}
     </div>
   );
 };
