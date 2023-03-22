@@ -50,6 +50,7 @@ export const TBodyDragDrop = (props: ITBodyDragDrop) => {
                 <Draggable key={item[0]} draggableId={item[0]} index={index}>
                   {(provided, snapshot) => (
                     <tr
+                      data-testid='stock-row'
                       key={item[0]}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
