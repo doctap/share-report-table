@@ -1,10 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks/redux';
-import { getStocks } from '../../../api';
+import { type IStock, getStocks } from '../../../api';
 import { Pagination, Table } from '../../index';
-import { getConvertedStocks, getNumberedStocks } from '../../../helpers';
+import { getConvertedItems, getNumberedStocks } from '../../../helpers';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './PaginationPage.module.scss';
+
+const sortedKeys: Array<keyof IStock> = [
+  'rowNumber',
+  'symbol',
+  'askPrice',
+  'askSize',
+  'bidPrice',
+  'bidSize',
+  'lastSalePrice',
+  'lastSaleSize',
+  'lastSaleTime',
+  'lastUpdated',
+  'sector',
+  'securityType',
+  'volume'
+];
 
 export const PaginationPage = () => {
   const location = useLocation();
@@ -17,7 +33,7 @@ export const PaginationPage = () => {
   const dispatch = useAppDispatch();
 
   const [currentPage, setCurrentPage] = useState(pageNumber);
-  const table = getConvertedStocks(getNumberedStocks(stocks, currentPage));
+  const table = getConvertedItems(getNumberedStocks(stocks, currentPage), sortedKeys);
 
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected + 1);
